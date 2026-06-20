@@ -19,9 +19,56 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+/* SIDEBAR */
 [data-testid="stSidebar"]{
-    background-color:#06244d;
+    background: linear-gradient(180deg,#06244d,#0d3b66);
 }
+
+/* Texto sidebar */
+[data-testid="stSidebar"] *{
+    color:white !important;
+}
+
+/* Radio buttons */
+.stRadio label{
+    color:white !important;
+    font-size:17px !important;
+    font-weight:600 !important;
+}
+
+/* Título principal */
+.hero{
+    background:linear-gradient(90deg,#06244d,#1f4f96);
+    padding:35px;
+    border-radius:20px;
+    color:white;
+    box-shadow:0px 8px 25px rgba(0,0,0,0.20);
+}
+
+/* KPI */
+.kpi{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0px 3px 12px rgba(0,0,0,0.15);
+}
+
+/* Ocultar menú Streamlit */
+#MainMenu{
+    visibility:hidden;
+}
+
+footer{
+    visibility:hidden;
+}
+
+header{
+    visibility:hidden;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 .kpi {
     background:white;
@@ -94,7 +141,27 @@ if menu == "Resumen Ejecutivo":
 
     st.header("📊 Indicadores Estratégicos")
 
-    c1,c2,c3,c4,c5,c6 = st.columns(6)
+    k1,k2,k3 = st.columns(3)
+
+with k1:
+    st.metric("💰 Ventas", "S/ 287,529", "+18%")
+
+with k2:
+    st.metric("📉 Gastos", "S/ 155,308", "-5%")
+
+with k3:
+    st.metric("💵 Ganancia", "S/ 132,221", "+22%")
+
+k4,k5,k6 = st.columns(3)
+
+with k4:
+    st.metric("👥 Clientes", "9")
+
+with k5:
+    st.metric("👨‍💼 Trabajadores", "7")
+
+with k6:
+    st.metric("📈 Margen", "46%")
 
     c1.metric("Ventas", f"S/ {ventas:,.0f}")
     c2.metric("Gastos", f"S/ {gastos:,.0f}")
@@ -123,18 +190,33 @@ if menu == "Resumen Ejecutivo":
         fig_meta,
         use_container_width=True
     )
+    
+st.success("""
+### 📌 Conclusión Ejecutiva
 
-    st.success("""
-    ✅ Producción creciente.
+✅ Producción creciente durante todo el año.
 
-    ✅ Mortalidad reducida.
+✅ Mortalidad reducida de 16.5% a 2.1%.
 
-    ✅ Margen superior al 40%.
+✅ Margen de ganancia de 46%.
 
-    ✅ Empresa rentable.
+✅ Negocio rentable y sostenible.
 
-    ✅ Principal gasto: Alimentación.
-    """)
+✅ Principal gasto: alimentación.
+""")
+    
+    st.subheader("🚦 Estado de Indicadores")
+
+c1,c2,c3 = st.columns(3)
+
+with c1:
+    st.success("🟢 Producción: Excelente")
+
+with c2:
+    st.success("🟢 Mortalidad: Controlada")
+
+with c3:
+    st.success("🟢 Rentabilidad: Alta")
 
 # ==========================================
 # PRODUCCIÓN
