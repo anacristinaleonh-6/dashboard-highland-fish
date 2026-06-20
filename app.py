@@ -1,167 +1,12 @@
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-
-# ==========================================
-# CONFIGURACIÓN
-# ==========================================
-
-st.set_page_config(
-    page_title="Highland Fish Dashboard",
-    page_icon="🐟",
-    layout="wide"
-)
-
-# ==========================================
-# ESTILOS
-# ==========================================
-
-st.markdown("""
-<style>
-
-/* SIDEBAR */
-[data-testid="stSidebar"]{
-    background: linear-gradient(180deg,#06244d,#0d3b66);
-}
-
-/* Texto sidebar */
-[data-testid="stSidebar"] *{
-    color:white !important;
-}
-
-/* Radio buttons */
-.stRadio label{
-    color:white !important;
-    font-size:17px !important;
-    font-weight:600 !important;
-}
-
-/* Título principal */
-.hero{
-    background:linear-gradient(90deg,#06244d,#1f4f96);
-    padding:35px;
-    border-radius:20px;
-    color:white;
-    box-shadow:0px 8px 25px rgba(0,0,0,0.20);
-}
-
-/* KPI */
-.kpi{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    text-align:center;
-    box-shadow:0px 3px 12px rgba(0,0,0,0.15);
-}
-
-/* Ocultar menú Streamlit */
-#MainMenu{
-    visibility:hidden;
-}
-
-footer{
-    visibility:hidden;
-}
-
-header{
-    visibility:hidden;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-.kpi {
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0px 3px 10px rgba(0,0,0,0.15);
-    text-align:center;
-}
-
-.titulo {
-    background:linear-gradient(90deg,#06244d,#1f4f96);
-    padding:25px;
-    border-radius:15px;
-    color:white;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-# ==========================================
-# DATOS GENERALES
-# ==========================================
-
-ventas = 287529
-gastos = 155307.55
-ganancia = 132221
-clientes = 9
-trabajadores = 7
-
-margen = (ganancia / ventas) * 100
-
-# ==========================================
-# SIDEBAR
-# ==========================================
-
-st.sidebar.title("🐟 Highland Fish")
-
-menu = st.sidebar.radio(
-    "Navegación",
-    [
-        "Resumen Ejecutivo",
-        "Producción",
-        "Finanzas",
-        "Clientes",
-        "Personal"
-    ]
-)
-
-st.sidebar.success("Empresa Saludable")
-
-# ==========================================
-# CABECERA
-# ==========================================
-
-st.markdown("""
-<div class='titulo'>
-<h1>🐟 Highland Fish</h1>
-<h3>Dashboard Ejecutivo Empresarial</h3>
-<p>Piscicultura de Trucha Arcoíris</p>
-</div>
-""", unsafe_allow_html=True)
-
-st.write("")
-
-# ==========================================
+# =====================================
 # RESUMEN EJECUTIVO
-# ==========================================
+# =====================================
 
 if menu == "Resumen Ejecutivo":
 
-    st.header("📊 Indicadores Estratégicos")
+    st.markdown("## 📊 Indicadores Estratégicos")
 
-    k1,k2,k3 = st.columns(3)
-
-with k1:
-    st.metric("💰 Ventas", "S/ 287,529", "+18%")
-
-with k2:
-    st.metric("📉 Gastos", "S/ 155,308", "-5%")
-
-with k3:
-    st.metric("💵 Ganancia", "S/ 132,221", "+22%")
-
-k4,k5,k6 = st.columns(3)
-
-with k4:
-    st.metric("👥 Clientes", "9")
-
-with k5:
-    st.metric("👨‍💼 Trabajadores", "7")
-
-with k6:
-    st.metric("📈 Margen", "46%")
+    c1, c2, c3, c4, c5, c6, c7 = st.columns(7)
 
     c1.metric("Ventas", f"S/ {ventas:,.0f}")
     c2.metric("Gastos", f"S/ {gastos:,.0f}")
@@ -169,6 +14,11 @@ with k6:
     c4.metric("Clientes", clientes)
     c5.metric("Trabajadores", trabajadores)
     c6.metric("Margen", f"{margen:.1f}%")
+    c7.metric("Mortalidad Final", "2.1%")
+
+    st.info(
+        "📌 Highland Fish mantiene crecimiento productivo sostenido y reducción constante de mortalidad."
+    )
 
     st.markdown("---")
 
@@ -186,41 +36,23 @@ with k6:
         title="Metas vs Resultados"
     )
 
-    st.plotly_chart(
-        fig_meta,
-        use_container_width=True
-    )
-    
-st.success("""
-### 📌 Conclusión Ejecutiva
+    st.plotly_chart(fig_meta, use_container_width=True)
 
-✅ Producción creciente durante todo el año.
+    st.success("""
+    ✅ Producción aumentó de 836 kg a 19,940 kg.
 
-✅ Mortalidad reducida de 16.5% a 2.1%.
+    ✅ Mortalidad reducida de 16.5% a 2.1%.
 
-✅ Margen de ganancia de 46%.
+    ✅ Margen de ganancia de 46%.
 
-✅ Negocio rentable y sostenible.
+    ✅ Principal gasto: Alimentación.
 
-✅ Principal gasto: alimentación.
-""")
-    
-    st.subheader("🚦 Estado de Indicadores")
+    ✅ Empresa rentable y en crecimiento.
+    """)
 
-c1,c2,c3 = st.columns(3)
-
-with c1:
-    st.success("🟢 Producción: Excelente")
-
-with c2:
-    st.success("🟢 Mortalidad: Controlada")
-
-with c3:
-    st.success("🟢 Rentabilidad: Alta")
-
-# ==========================================
+# =====================================
 # PRODUCCIÓN
-# ==========================================
+# =====================================
 
 elif menu == "Producción":
 
@@ -230,43 +62,20 @@ elif menu == "Producción":
         "Mes":["Enero","Febrero","Marzo","Abril","Mayo",
                "Junio","Julio","Agosto","Setiembre",
                "Octubre","Noviembre"],
-
-        "Produccion":[
-            836.93,
-            1824.78,
-            3520.23,
-            5561.56,
-            8142.31,
-            9624.40,
-            7743.87,
-            10556.66,
-            13956.47,
-            17195.07,
-            19940.27
-        ]
+        "Produccion":[836.93,1824.78,3520.23,5561.56,
+                      8142.31,9624.40,7743.87,10556.66,
+                      13956.47,17195.07,19940.27]
     })
 
     mortalidad = pd.DataFrame({
         "Mes":["Enero","Febrero","Marzo","Abril","Mayo",
                "Junio","Julio","Agosto","Setiembre",
                "Octubre","Noviembre"],
-
-        "Mortalidad":[
-            16.5,
-            13.6,
-            10.5,
-            9.5,
-            8.0,
-            6.1,
-            3.2,
-            3.2,
-            2.8,
-            2.6,
-            2.1
-        ]
+        "Mortalidad":[16.5,13.6,10.5,9.5,8.0,
+                      6.1,3.2,3.2,2.8,2.6,2.1]
     })
 
-    col1,col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
     with col1:
 
@@ -277,10 +86,7 @@ elif menu == "Producción":
             title="Producción Mensual (kg)"
         )
 
-        st.plotly_chart(
-            fig1,
-            use_container_width=True
-        )
+        st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
 
@@ -292,40 +98,24 @@ elif menu == "Producción":
             title="Mortalidad (%)"
         )
 
-        st.plotly_chart(
-            fig2,
-            use_container_width=True
-        )
+        st.plotly_chart(fig2, use_container_width=True)
 
-    st.dataframe(
-        produccion,
-        use_container_width=True
-    )
+    st.dataframe(produccion, use_container_width=True)
 
-# ==========================================
+# =====================================
 # FINANZAS
-# ==========================================
+# =====================================
 
 elif menu == "Finanzas":
 
     st.header("💰 Finanzas")
 
     gastos_df = pd.DataFrame({
-        "Concepto":[
-            "Alimento",
-            "Personal",
-            "Alevines",
-            "Gastos Generales"
-        ],
-        "Monto":[
-            98902.55,
-            44555,
-            10000,
-            1850
-        ]
+        "Concepto":["Alimento","Personal","Alevines","Gastos Generales"],
+        "Monto":[98902.55,44555,10000,1850]
     })
 
-    col1,col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
     with col1:
 
@@ -337,10 +127,7 @@ elif menu == "Finanzas":
             title="Distribución de Gastos"
         )
 
-        st.plotly_chart(
-            fig3,
-            use_container_width=True
-        )
+        st.plotly_chart(fig3, use_container_width=True)
 
     with col2:
 
@@ -352,19 +139,13 @@ elif menu == "Finanzas":
             title="Comparación de Gastos"
         )
 
-        st.plotly_chart(
-            fig4,
-            use_container_width=True
-        )
+        st.plotly_chart(fig4, use_container_width=True)
 
-    st.dataframe(
-        gastos_df,
-        use_container_width=True
-    )
+    st.dataframe(gastos_df, use_container_width=True)
 
-# ==========================================
+# =====================================
 # CLIENTES
-# ==========================================
+# =====================================
 
 elif menu == "Clientes":
 
@@ -382,19 +163,13 @@ elif menu == "Clientes":
             "Nelly Acero",
             "Hotel Monasterio"
         ],
-
-        "Participación":[
-            23,
-            20,
-            12,
-            10,
-            9,
-            9,
-            7,
-            7,
-            3
-        ]
+        "Participación":[23,20,12,10,9,9,7,7,3]
     })
+
+    clientes_df = clientes_df.sort_values(
+        by="Participación",
+        ascending=False
+    )
 
     fig5 = px.bar(
         clientes_df,
@@ -404,19 +179,13 @@ elif menu == "Clientes":
         title="Participación de Clientes (%)"
     )
 
-    st.plotly_chart(
-        fig5,
-        use_container_width=True
-    )
+    st.plotly_chart(fig5, use_container_width=True)
 
-    st.dataframe(
-        clientes_df,
-        use_container_width=True
-    )
+    st.dataframe(clientes_df, use_container_width=True)
 
-# ==========================================
+# =====================================
 # PERSONAL
-# ==========================================
+# =====================================
 
 elif menu == "Personal":
 
@@ -430,14 +199,7 @@ elif menu == "Personal":
             "Ingeniero Pesquero",
             "Contador"
         ],
-
-        "Sueldo":[
-            13000,
-            11000,
-            8925,
-            7630,
-            4000
-        ]
+        "Sueldo":[13000,11000,8925,7630,4000]
     })
 
     fig6 = px.bar(
@@ -448,19 +210,13 @@ elif menu == "Personal":
         title="Costo por Cargo"
     )
 
-    st.plotly_chart(
-        fig6,
-        use_container_width=True
-    )
+    st.plotly_chart(fig6, use_container_width=True)
 
-    st.dataframe(
-        personal,
-        use_container_width=True
-    )
+    st.dataframe(personal, use_container_width=True)
 
-# ==========================================
-# FOOTER
-# ==========================================
+# =====================================
+# PIE DE PÁGINA
+# =====================================
 
 st.markdown("---")
 
