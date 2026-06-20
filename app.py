@@ -1,44 +1,54 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 
-# =====================================================
-# CONFIGURACION
-# =====================================================
 
 st.set_page_config(
-    page_title="Highland Fish",
-    page_icon="🐟",
-    layout="wide"
+        page_title="Highland Fish",
+        page_icon="🐟",
+        layout="wide"
 )
 
 
 
-# =====================================================
-# CSS
-# =====================================================
+####################################################
+# CSS PREMIUM
+####################################################
 
 st.markdown("""
-
 <style>
 
-[data-testid="stSidebar"]{
-background:#06244d;
+.stApp{
+background-color:#f4f7fa;
 }
 
-[data-testid="stSidebar"] *{
-color:white !important;
+
+section[data-testid="stSidebar"]{
+
+background:linear-gradient(180deg,#06244D,#0B4F8C);
+
 }
+
+
+section[data-testid="stSidebar"] *{
+
+color:white;
+
+}
+
 
 
 .hero{
 
-background:linear-gradient(90deg,#06244d,#1f4f96);
+background:linear-gradient(90deg,#06244D,#0B4F8C);
 
-padding:30px;
+padding:35px;
 
-border-radius:20px;
+border-radius:25px;
+
+box-shadow:0px 5px 25px rgba(0,0,0,0.20);
 
 color:white;
 
@@ -47,32 +57,70 @@ margin-bottom:20px;
 }
 
 
-[data-testid="metric-container"]{
+
+.card{
+
 
 background:white;
 
-padding:15px;
 
-border-radius:15px;
+padding:20px;
 
-box-shadow:0px 4px 12px rgba(0,0,0,0.12);
 
-border-left:5px solid #1f4f96;
+border-radius:18px;
+
+
+box-shadow:0px 3px 15px rgba(0,0,0,0.10);
+
+
+border-left:6px solid #0B4F8C;
+
 
 }
+
+
+.small{
+
+font-size:14px;
+
+color:gray;
+
+}
+
+
+.big{
+
+
+font-size:35px;
+
+
+font-weight:bold;
+
+
+color:#06244D;
+
+
+}
+
 
 
 #MainMenu{
+
 visibility:hidden;
+
 }
+
 
 footer{
+
 visibility:hidden;
+
 }
 
-
 header{
+
 visibility:hidden;
+
 }
 
 </style>
@@ -81,45 +129,21 @@ visibility:hidden;
 
 
 
-# =====================================================
-# DATOS GENERALES
-# =====================================================
-
-
-ventas=9067500
-
-utilidad=2357500
-
-clientes=46
-
-trabajadores=76
-
-produccion=604500
-
-mortalidad=1.98
-
-fcr=1.40
-
-
-
-
-# =====================================================
+####################################################
 # SIDEBAR
-# =====================================================
+####################################################
 
+st.sidebar.title("🐟 Highland Fish")
 
-st.sidebar.markdown("# 🐟 Highland Fish")
+st.sidebar.write("---")
 
-st.sidebar.markdown("### Dashboard 2026")
+menu=st.sidebar.radio(
 
-
-menu = st.sidebar.radio(
-
-"Navegación",
+"Menú",
 
 [
 
-"Resumen Ejecutivo",
+"Dashboard",
 
 "Producción",
 
@@ -131,9 +155,9 @@ menu = st.sidebar.radio(
 
 "Personal",
 
-"KPIs Estratégicos",
+"KPIs",
 
-"Planeamiento Estratégico",
+"Planeamiento",
 
 "Proyección"
 
@@ -142,29 +166,25 @@ menu = st.sidebar.radio(
 )
 
 
+
 st.sidebar.success("Empresa Sostenible")
 
 
 
-
-# =====================================================
-# CABECERA
-# =====================================================
-
+####################################################
+# HERO
+####################################################
 
 
 st.markdown("""
 
 <div class='hero'>
 
-
 <h1>🐟 Highland Fish S.A.C.</h1>
-
 
 <h3>Dashboard Estratégico Integral 2026</h3>
 
-
-<p>Producción sostenible de trucha arcoíris en el Lago Titicaca</p>
+Producción sostenible de trucha arcoíris en el Lago Titicaca
 
 
 </div>
@@ -174,17 +194,39 @@ st.markdown("""
 
 
 
-# =====================================================
-# RESUMEN EJECUTIVO
-# =====================================================
-
-
-if menu=="Resumen Ejecutivo":
+####################################################
+# DATOS EJECUTIVOS
+####################################################
 
 
 
-    st.header("📊 Indicadores Estratégicos")
+ventas=9067500
 
+utilidad=2357500
+
+produccion=604500
+
+clientes=46
+
+trabajadores=76
+
+mortalidad=1.98
+
+fcr=1.40
+
+
+
+
+
+####################################################
+# DASHBOARD
+####################################################
+
+
+if menu=="Dashboard":
+
+
+    st.header("📊 Resumen Ejecutivo")
 
 
     c1,c2,c3=st.columns(3)
@@ -192,38 +234,109 @@ if menu=="Resumen Ejecutivo":
 
 
     with c1:
-        st.metric(
 
-        "Ventas",
+        st.markdown(f"""
 
-        "S/9,067,500"
+<div class='card'>
 
-        )
+
+<div class='small'>
+
+VENTAS
+
+
+</div>
+
+
+
+<div class='big'>
+
+S/. {ventas:,.0f}
+
+
+</div>
+
+
+▲ 8.4%
+
+</div>
+
+""",unsafe_allow_html=True)
 
 
 
     with c2:
 
-        st.metric(
 
-        "Producción",
+        st.markdown(f"""
 
-        "604,500 kg"
+<div class='card'>
 
-        )
+
+<div class='small'>
+
+UTILIDAD
+
+
+</div>
+
+
+
+<div class='big'>
+
+S/. {utilidad:,.0f}
+
+
+</div>
+
+
+▲ 12.2%
+
+</div>
+
+""",unsafe_allow_html=True)
+
 
 
 
     with c3:
 
-        st.metric(
 
-        "Utilidad",
+        st.markdown(f"""
 
-        "S/2,357,500"
+<div class='card'>
 
-        )
 
+<div class='small'>
+
+PRODUCCIÓN
+
+
+</div>
+
+
+
+<div class='big'>
+
+{produccion:,.0f}
+
+
+</div>
+
+
+kg
+
+
+</div>
+
+""",unsafe_allow_html=True)
+
+
+
+
+####################################################
+# SEGUNDA FILA
+####################################################
 
 
     c4,c5,c6=st.columns(3)
@@ -232,44 +345,251 @@ if menu=="Resumen Ejecutivo":
 
     with c4:
 
-        st.metric(
 
-        "Clientes",
+        st.markdown(f"""
 
-        "46"
+<div class='card'>
 
-        )
+
+<div class='small'>
+
+CLIENTES
+
+
+</div>
+
+
+
+<div class='big'>
+
+{clientes}
+
+
+</div>
+
+
+
+</div>
+
+""",unsafe_allow_html=True)
+
 
 
 
     with c5:
 
-        st.metric(
 
-        "Trabajadores",
 
-        "76"
+        st.markdown(f"""
 
-        )
+<div class='card'>
+
+
+<div class='small'>
+
+PERSONAL
+
+
+</div>
+
+
+
+<div class='big'>
+
+{trabajadores}
+
+
+</div>
+
+
+
+</div>
+
+""",unsafe_allow_html=True)
+
 
 
 
     with c6:
 
-        st.metric(
 
-        "FCR",
+        st.markdown(f"""
 
-        "1.40"
+<div class='card'>
 
-        )
 
+<div class='small'>
+
+MORTALIDAD
+
+
+</div>
+
+
+
+<div class='big'>
+
+{mortalidad}%
+
+
+</div>
+
+
+🟢 Excelente
+
+
+</div>
+
+""",unsafe_allow_html=True)
+
+
+
+
+
+####################################################
+# GAUGE KPI
+####################################################
 
 
     st.write("")
 
 
-    st.subheader("📌 Estado General")
+
+    col1,col2=st.columns(2)
+
+
+
+    with col1:
+
+
+
+        fig=go.Figure(go.Indicator(
+
+        mode="gauge+number",
+
+        value=mortalidad,
+
+
+
+        title={'text':"Mortalidad"},
+
+
+
+        gauge={
+
+
+        'axis':{'range':[0,5]},
+
+
+
+        'bar':{'color':"#0B4F8C"},
+
+
+
+        'steps':[
+
+
+        {'range':[0,2.5],'color':'lightgreen'},
+
+
+
+        {'range':[2.5,5],'color':'lightcoral'}
+
+        ]
+
+        }
+
+
+        ))
+
+
+
+        fig.update_layout(height=350)
+
+
+
+        st.plotly_chart(
+
+        fig,
+
+        use_container_width=True
+
+        )
+
+
+
+
+
+    with col2:
+
+
+
+        fig2=go.Figure(go.Indicator(
+
+
+        mode="gauge+number",
+
+
+
+        value=fcr,
+
+
+
+        title={'text':"FCR"},
+
+
+
+        gauge={
+
+
+
+        'axis':{'range':[1,2]},
+
+
+
+        'bar':{'color':"#0B4F8C"},
+
+
+
+        'steps':[
+
+
+
+        {'range':[1,1.4],'color':'lightgreen'},
+
+
+
+        {'range':[1.4,2],'color':'orange'}
+
+        ]
+
+        }
+
+        ))
+
+
+
+        fig2.update_layout(height=350)
+
+
+
+        st.plotly_chart(
+
+        fig2,
+
+        use_container_width=True
+
+        )
+
+
+
+
+####################################################
+# ESTADO GENERAL
+####################################################
+
+
+    st.subheader("Estado General")
 
 
 
@@ -277,71 +597,20 @@ if menu=="Resumen Ejecutivo":
 
 
 
-    with a:
-
-        st.success(
-
-        "Producción en crecimiento"
-
-        )
+    a.success("Producción en crecimiento")
 
 
+    b.success("Rentabilidad positiva")
 
 
-    with b:
+    c.success("Mortalidad controlada")
 
-
-        st.success(
-
-        "Mortalidad controlada"
-
-        )
-
-
-
-
-    with c:
-
-
-        st.success(
-
-        "Rentabilidad positiva"
-
-        )
-
-
-
-    st.info("""
-
-    Highland Fish cumple sus objetivos estratégicos.
-
-
-    ✔ Producción superior a 600 mil kg
-
-
-    ✔ Mortalidad menor al 2.5%
-
-
-    ✔ Crecimiento comercial
-
-
-    ✔ Rentabilidad positiva
-
-
-    """)
-
-
-
-
-
-# =====================================================
+####################################################
 # PRODUCCION
-# =====================================================
-
+####################################################
 
 
 elif menu=="Producción":
-
 
 
     st.header("🐟 Producción")
@@ -351,27 +620,26 @@ elif menu=="Producción":
     df=pd.DataFrame({
 
 
-"Mes":[
+    "Mes":[
 
-"Enero",
-"Febrero",
-"Marzo",
-"Abril",
-"Mayo",
-"Junio",
-"Julio",
-"Agosto",
-"Septiembre",
-"Octubre",
-"Noviembre",
-"Diciembre"
+    "Ene",
+    "Feb",
+    "Mar",
+    "Abr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dic"
 
-],
-
-
+    ],
 
 
-"Producción":[
+
+    "Produccion":[
 
 
 42000,
@@ -386,6 +654,7 @@ elif menu=="Producción":
 55500,
 57000,
 60000
+
 
 ],
 
@@ -407,6 +676,7 @@ elif menu=="Producción":
 77700,
 79800,
 84000
+
 
 ],
 
@@ -435,28 +705,950 @@ elif menu=="Producción":
 
 
 
+###################################################
+# KPIs
+###################################################
+
+
+c1,c2,c3,c4=st.columns(4)
+
+
+
+with c1:
+
+    st.metric(
+
+    "Producción anual",
+
+    "604,500 kg"
+
+)
+
+
+
+
+
+with c2:
+
+
+    st.metric(
+
+    "Meta",
+
+    "600,000 kg"
+
+)
+
+
+
+with c3:
+
+
+    st.metric(
+
+    "Mortalidad",
+
+    "1.98 %"
+
+)
+
+
+
+
+with c4:
+
+
+    st.metric(
+
+    "FCR",
+
+    "1.40"
+
+)
+
+
+
+
+
+###################################################
+# GRAFICOS
+###################################################
+
+
+col1,col2=st.columns(2)
+
+
+
+#######################################
+# PRODUCCION
+#######################################
+
+
+with col1:
+
+
+
+    fig=px.bar(
+
+
+    df,
+
+
+    x="Mes",
+
+
+    y="Produccion",
+
+
+
+    color="Produccion",
+
+
+
+    color_continuous_scale="Blues",
+
+
+
+    title="Producción Mensual"
+
+)
+
+
+
+    fig.update_layout(
+
+
+    template="plotly_white",
+
+
+    height=450
+
+
+)
+
+
+
+    st.plotly_chart(
+
+
+    fig,
+
+
+    use_container_width=True
+
+)
+
+
+
+
+
+##########################################
+# MORTALIDAD
+##########################################
+
+
+
+with col2:
+
+
+
+    fig2=px.line(
+
+
+    df,
+
+
+    x="Mes",
+
+
+    y="Mortalidad",
+
+
+
+    markers=True,
+
+
+
+    title="Mortalidad"
+
+
+
+)
+
+
+
+    fig2.update_traces(
+
+
+    line_color="#0B4F8C",
+
+    marker_size=10
+
+)
+
+
+
+    fig2.update_layout(
+
+
+    template="plotly_white",
+
+
+    height=450
+
+
+)
+
+
+
+    st.plotly_chart(
+
+
+    fig2,
+
+
+    use_container_width=True
+
+)
+
+
+
+
+
+
+####################################################
+# ALIMENTO
+####################################################
+
+
+fig3=px.area(
+
+
+df,
+
+
+x="Mes",
+
+
+y="Alimento",
+
+
+
+title="Consumo de alimento"
+
+
+
+)
+
+
+
+fig3.update_layout(
+
+
+template="plotly_white",
+
+
+height=450
+
+)
+
+
+
+fig3.update_traces(
+
+
+fillcolor="#4EA5D9",
+
+
+line_color="#0B4F8C"
+
+)
+
+
+
+st.plotly_chart(
+
+
+fig3,
+
+
+use_container_width=True
+
+)
+
+
+
+
+
+####################################################
+# META
+####################################################
+
+
+st.subheader("🎯 Cumplimiento de Metas")
+
+
+
+meta=pd.DataFrame({
+
+
+"Indicador":[
+
+"Producción"
+
+],
+
+
+
+"Meta":[
+
+
+600000
+
+],
+
+
+
+"Real":[
+
+
+604500
+
+]
+
+})
+
+
+
+
+fig4=px.bar(
+
+
+meta,
+
+
+
+x="Indicador",
+
+
+
+y=["Meta","Real"],
+
+
+
+barmode="group",
+
+
+
+title="Meta vs Resultado"
+
+
+
+)
+
+
+
+fig4.update_layout(
+
+
+template="plotly_white",
+
+
+
+height=400
+
+)
+
+
+
+st.plotly_chart(
+
+
+fig4,
+
+
+use_container_width=True
+
+)
+
+
+
+
+
+
+####################################################
+# TABLA
+####################################################
+
+
+st.subheader("Detalle Producción")
+
+
+
+st.dataframe(
+
+
+df,
+
+
+
+use_container_width=True,
+
+
+
+hide_index=True
+
+)
+
+
+####################################################
+# FINANZAS
+####################################################
+
+elif menu=="Finanzas":
+
+    st.header("💰 Finanzas")
+
+
+    costos = pd.DataFrame({
+
+        "Concepto":[
+
+            "Alimento balanceado",
+            "Sueldos",
+            "Energía",
+            "Transporte",
+            "Mantenimiento",
+            "Otros"
+
+        ],
+
+        "Monto":[
+
+            3840000,
+            1680000,
+            420000,
+            300000,
+            240000,
+            180000
+
+        ]
+
+    })
+
+
+    ventas_anuales=9067500
+    utilidad=2357500
+    costos_totales=6660000
+    margen=26
+
+
+####################################################
+# KPIs
+####################################################
+
+
+    k1,k2,k3,k4=st.columns(4)
+
+
+
+    with k1:
+
+        st.metric(
+
+            "Ventas",
+
+            "S/ 9.07 M"
+
+        )
+
+
+
+    with k2:
+
+        st.metric(
+
+            "Costos",
+
+            "S/ 6.66 M"
+
+        )
+
+
+
+    with k3:
+
+        st.metric(
+
+            "Utilidad",
+
+            "S/ 2.36 M"
+
+        )
+
+
+
+    with k4:
+
+        st.metric(
+
+            "Margen",
+
+            "26 %"
+
+        )
+
+
+####################################################
+# GRAFICOS
+####################################################
+
+
     col1,col2=st.columns(2)
 
+
+
+#########################################
+# DONUT
+#########################################
 
 
     with col1:
 
 
 
-        fig=px.bar(
+        fig=px.pie(
 
-            df,
 
-            x="Mes",
+            costos,
 
-            y="Producción",
 
-            color="Producción",
+            names="Concepto",
 
-            title="Producción Mensual"
+
+            values="Monto",
+
+
+            hole=.65
+
 
         )
 
+
+
+        fig.update_layout(
+
+
+            title="Distribución de Costos",
+
+
+            template="plotly_white",
+
+
+            height=500
+
+        )
+
+
+
+        st.plotly_chart(
+
+
+            fig,
+
+
+            use_container_width=True
+
+        )
+
+
+
+
+#########################################
+# BARRAS
+#########################################
+
+
+
+    with col2:
+
+
+
+        fig2=px.bar(
+
+
+
+            costos,
+
+
+
+            x="Concepto",
+
+
+
+            y="Monto",
+
+
+
+            color="Concepto"
+
+
+
+        )
+
+
+
+        fig2.update_layout(
+
+
+
+            title="Costos por Categoría",
+
+
+
+            template="plotly_white",
+
+
+
+            height=500
+
+        )
+
+
+
+        st.plotly_chart(
+
+
+            fig2,
+
+
+            use_container_width=True
+
+        )
+
+
+
+####################################################
+# COMPARACION
+####################################################
+
+
+
+    comparacion=pd.DataFrame({
+
+
+        "Concepto":[
+
+
+            "Ventas",
+            "Costos",
+            "Utilidad"
+
+        ],
+
+
+
+        "Monto":[
+
+
+            ventas_anuales,
+            costos_totales,
+            utilidad
+
+        ]
+
+    })
+
+
+
+
+
+    fig3=px.bar(
+
+
+        comparacion,
+
+
+        x="Concepto",
+
+
+        y="Monto",
+
+
+
+        color="Concepto"
+
+
+
+    )
+
+
+
+    fig3.update_layout(
+
+
+        title="Ventas vs Costos vs Utilidad",
+
+
+
+        template="plotly_white",
+
+
+
+        height=450
+
+    )
+
+
+
+    st.plotly_chart(
+
+
+        fig3,
+
+
+        use_container_width=True
+
+    )
+
+
+
+
+
+####################################################
+# RENTABILIDAD
+####################################################
+
+
+
+    st.subheader("📈 Rentabilidad")
+
+
+
+
+    fig4=go.Figure(go.Indicator(
+
+
+
+        mode="gauge+number",
+
+
+
+        value=26,
+
+
+
+        title={'text':"Margen (%)"},
+
+
+
+
+        gauge={
+
+
+            'axis':{'range':[0,40]},
+
+
+
+            'bar':{'color':"#0B4F8C"},
+
+
+
+            'steps':[
+
+
+
+                {'range':[0,15],'color':'lightcoral'},
+
+
+
+                {'range':[15,25],'color':'khaki'},
+
+
+
+                {'range':[25,40],'color':'lightgreen'}
+
+            ]
+
+        }
+
+    ))
+
+
+
+    fig4.update_layout(
+
+
+        height=400
+
+    )
+
+
+
+    st.plotly_chart(
+
+
+        fig4,
+
+
+        use_container_width=True
+
+    )
+
+
+
+
+####################################################
+# SEMAFORO
+####################################################
+
+
+
+    st.subheader("Estado Financiero")
+
+
+
+    c1,c2,c3=st.columns(3)
+
+
+
+    with c1:
+
+        st.success(
+
+            "🟢 Ventas en crecimiento"
+
+        )
+
+
+
+    with c2:
+
+
+        st.success(
+
+            "🟢 Utilidad positiva"
+
+        )
+
+
+
+    with c3:
+
+
+        st.success(
+
+            "🟢 Margen saludable"
+
+        )
+
+
+
+
+####################################################
+# TABLA
+####################################################
+
+
+    st.subheader("Detalle de Costos")
+
+
+    st.dataframe(
+
+
+        costos,
+
+
+        use_container_width=True,
+
+
+        hide_index=True
+
+    )
+####################################################
+# CLIENTES
+####################################################
+
+elif menu=="Clientes":
+
+    st.header("👥 Clientes")
+
+    clientes = pd.DataFrame({
+
+        "Cliente":[
+            "Supermercados",
+            "Restaurantes",
+            "Mayoristas",
+            "Hoteles",
+            "Exportación"
+        ],
+
+        "Participacion":[
+            35,
+            25,
+            20,
+            10,
+            10
+        ]
+
+    })
+
+
+    c1,c2,c3=st.columns(3)
+
+    with c1:
+        st.metric(
+            "Clientes activos",
+            "46"
+        )
+
+    with c2:
+        st.metric(
+            "Meta",
+            "45"
+        )
+
+    with c3:
+        st.metric(
+            "Cumplimiento",
+            "102%"
+        )
+
+
+
+    col1,col2=st.columns(2)
+
+
+####################################################
+# DONUT
+####################################################
+
+
+    with col1:
+
+
+        fig=px.pie(
+
+            clientes,
+
+            names="Cliente",
+
+            values="Participacion",
+
+            hole=0.65
+
+        )
+
+
+        fig.update_layout(
+
+            title="Distribución de Clientes",
+
+            template="plotly_white",
+
+            height=500
+
+        )
 
 
         st.plotly_chart(
@@ -469,25 +1661,36 @@ elif menu=="Producción":
 
 
 
+####################################################
+# BARRAS
+####################################################
+
 
     with col2:
 
 
+        fig2=px.bar(
 
-        fig2=px.line(
+            clientes,
 
-            df,
+            x="Participacion",
 
-            x="Mes",
+            y="Cliente",
 
-            y="Mortalidad",
+            orientation="h",
 
-            markers=True,
-
-            title="Mortalidad"
+            color="Participacion"
 
         )
 
+
+        fig2.update_layout(
+
+            template="plotly_white",
+
+            title="Participación"
+
+        )
 
 
         st.plotly_chart(
@@ -501,359 +1704,19 @@ elif menu=="Producción":
 
 
 
-    fig3=px.area(
-
-        df,
-
-        x="Mes",
-
-        y="Alimento",
-
-        title="Consumo de Alimento"
-
-    )
-
-
-
-    st.plotly_chart(
-
-        fig3,
-
-        use_container_width=True
-
-    )
-
-
-
-
-    st.dataframe(
-
-        df,
-
-        use_container_width=True
-
-    )
-# =====================================================
-# FINANZAS
-# =====================================================
-
-elif menu=="Finanzas":
-
-    st.header("💰 Finanzas")
-
-
-
-    finanzas = pd.DataFrame({
-
-        "Mes":[
-            "Enero","Febrero","Marzo","Abril",
-            "Mayo","Junio","Julio","Agosto",
-            "Septiembre","Octubre","Noviembre","Diciembre"
-        ],
-
-        "Ventas":[
-            630000,
-            652500,
-            675000,
-            697500,
-            720000,
-            742500,
-            765000,
-            787500,
-            810000,
-            832500,
-            855000,
-            900000
-        ],
-
-
-        "Costos":[
-            520000,
-            528000,
-            535000,
-            542000,
-            548000,
-            555000,
-            562000,
-            568000,
-            575000,
-            582000,
-            590000,
-            605000
-        ],
-
-
-        "Utilidad":[
-
-            110000,
-            124500,
-            140000,
-            155500,
-            172000,
-            187500,
-            203000,
-            219500,
-            235000,
-            250500,
-            265000,
-            295000
-        ]
-
-    })
-
-
-
-    c1,c2,c3 = st.columns(3)
-
-
-
-    with c1:
-        st.metric(
-            "Ventas",
-            "S/ 9,067,500"
-        )
-
-
-
-    with c2:
-        st.metric(
-            "Utilidad",
-            "S/2,357,500"
-        )
-
-
-
-    with c3:
-        st.metric(
-            "Margen",
-            "26%"
-        )
-
-
-
-    fig = px.line(
-
-        finanzas,
-
-        x="Mes",
-
-        y=["Ventas","Costos"],
-
-        markers=True,
-
-        title="Ventas vs Costos"
-
-    )
-
-
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-
-
-    fig2 = px.bar(
-
-        finanzas,
-
-        x="Mes",
-
-        y="Utilidad",
-
-        color="Utilidad",
-
-        title="Utilidad Mensual"
-
-    )
-
-
-
-    st.plotly_chart(
-        fig2,
-        use_container_width=True
-    )
-
-
-
-
-    costos = pd.DataFrame({
-
-        "Concepto":[
-
-            "Alimento",
-
-            "Sueldos",
-
-            "Energía",
-
-            "Transporte",
-
-            "Mantenimiento",
-
-            "Otros"
-
-        ],
-
-
-
-        "Monto":[
-
-            3840000,
-
-            1680000,
-
-            420000,
-
-            300000,
-
-            240000,
-
-            180000
-
-        ]
-
-    })
-
-
-
-    fig3 = px.pie(
-
-        costos,
-
-        names="Concepto",
-
-        values="Monto",
-
-        hole=.5,
-
-        title="Estructura de Costos"
-
-    )
-
-
-
-    st.plotly_chart(
-        fig3,
-        use_container_width=True
-    )
-
-
-
-
-
-# =====================================================
-# CLIENTES
-# =====================================================
-
-
-
-elif menu=="Clientes":
-
-
-
-    st.header("🛒 Clientes")
-
-
-
-    clientes_df = pd.DataFrame({
-
-
-        "Cliente":[
-
-            "Supermercados",
-
-            "Restaurantes",
-
-            "Mayoristas",
-
-            "Hoteles",
-
-            "Exportación"
-
-        ],
-
-
-
-        "Participación":[
-
-            35,
-
-            25,
-
-            20,
-
-            10,
-
-            10
-
-        ]
-
-    })
-
-
-
-
-    fig = px.pie(
-
-        clientes_df,
-
-        names="Cliente",
-
-        values="Participación",
-
-        hole=.5,
-
-        title="Participación por Cliente"
-
-    )
-
-
-
-    st.plotly_chart(
-
-        fig,
-
-        use_container_width=True
-
-    )
-
-
-
-    st.dataframe(
-
-        clientes_df,
-
-        use_container_width=True
-
-    )
-
-
-
-
-
-# =====================================================
+####################################################
 # PRODUCTOS
-# =====================================================
-
+####################################################
 
 
 elif menu=="Productos":
 
+    st.header("🐟 Productos")
 
 
-    st.header("🐠 Productos")
-
-
-
-
-    productos = pd.DataFrame({
-
-
+    productos=pd.DataFrame({
 
         "Producto":[
-
 
             "Trucha fresca",
 
@@ -861,22 +1724,15 @@ elif menu=="Productos":
 
             "Ahumada",
 
-            "Filete Premium"
-
+            "Filete premium"
 
         ],
 
-
-
-        "Participación":[
-
+        "Participacion":[
 
             55,
-
             25,
-
             15,
-
             5
 
         ]
@@ -885,23 +1741,51 @@ elif menu=="Productos":
 
 
 
-    fig = px.pie(
+    c1,c2,c3=st.columns(3)
 
+
+    with c1:
+        st.metric(
+            "Productos",
+            "4"
+        )
+
+
+    with c2:
+        st.metric(
+            "Principal",
+            "Trucha fresca"
+        )
+
+
+    with c3:
+        st.metric(
+            "Participación",
+            "55%"
+        )
+
+
+
+    fig=px.pie(
 
         productos,
 
-
         names="Producto",
 
+        values="Participacion",
 
-        values="Participación",
+        hole=0.60
+
+    )
 
 
-        hole=.5,
+    fig.update_layout(
 
+        title="Mix Comercial",
 
-        title="Mix de Productos"
+        template="plotly_white",
 
+        height=500
 
     )
 
@@ -917,74 +1801,41 @@ elif menu=="Productos":
 
 
 
-    st.dataframe(
-
-        productos,
-
-        use_container_width=True
-
-    )
-
-
-
-
-
-# =====================================================
+####################################################
 # PERSONAL
-# =====================================================
-
+####################################################
 
 
 elif menu=="Personal":
 
-
-
-    st.header("👥 Personal")
+    st.header("👨🏻‍💼 Personal")
 
 
 
-    personal = pd.DataFrame({
-
-
+    personal=pd.DataFrame({
 
         "Área":[
 
             "Producción",
-
             "Alimentación",
-
             "Procesamiento",
-
             "Calidad",
-
             "Logística",
-
             "Ventas",
-
             "Administración",
-
             "Gerencia"
 
         ],
 
-
-
         "Trabajadores":[
 
             45,
-
             12,
-
             8,
-
             4,
-
             3,
-
             2,
-
             1,
-
             1
 
         ]
@@ -993,8 +1844,51 @@ elif menu=="Personal":
 
 
 
+    c1,c2,c3=st.columns(3)
 
-    fig = px.bar(
+
+
+    with c1:
+
+        st.metric(
+
+            "Trabajadores",
+
+            "76"
+
+        )
+
+
+    with c2:
+
+        st.metric(
+
+            "Área principal",
+
+            "Producción"
+
+        )
+
+
+    with c3:
+
+        st.metric(
+
+            "Operativos",
+
+            "57"
+
+        )
+
+
+
+####################################################
+# BARRAS RRHH
+####################################################
+
+
+
+    fig=px.bar(
 
         personal,
 
@@ -1002,9 +1896,19 @@ elif menu=="Personal":
 
         y="Trabajadores",
 
-        color="Trabajadores",
+        color="Trabajadores"
 
-        title="Distribución del Personal"
+    )
+
+
+
+    fig.update_layout(
+
+        template="plotly_white",
+
+        title="Distribución del Personal",
+
+        height=500
 
     )
 
@@ -1020,250 +1924,420 @@ elif menu=="Personal":
 
 
 
-    st.metric(
-
-        "Total Trabajadores",
-
-        "76"
-
-    )
+####################################################
+# SEMAFOROS
+####################################################
 
 
-
-    st.dataframe(
-
-        personal,
-
-        use_container_width=True
-
-    )
-# =====================================================
-# KPIs ESTRATÉGICOS
-# =====================================================
-
-elif menu=="KPIs Estratégicos":
-
-
-    st.header("🎯 KPIs Estratégicos")
-
-
-    kpis=pd.DataFrame({
-
-        "Indicador":[
-
-            "Producción",
-
-            "Ventas",
-
-            "Utilidad",
-
-            "Clientes",
-
-            "Mortalidad",
-
-            "FCR"
-
-        ],
-
-
-
-        "Meta":[
-
-            "600,000 kg",
-
-            "S/9,000,000",
-
-            "S/2,300,000",
-
-            "45",
-
-            "≤2.5%",
-
-            "1.40"
-
-        ],
-
-
-
-        "Resultado":[
-
-            "604,500 kg",
-
-            "S/9,067,500",
-
-            "S/2,357,500",
-
-            "46",
-
-            "1.98%",
-
-            "1.40"
-
-        ],
-
-
-
-        "Estado":[
-
-            "🟢",
-
-            "🟢",
-
-            "🟢",
-
-            "🟢",
-
-            "🟢",
-
-            "🟢"
-
-        ]
-
-    })
-
-
-    st.dataframe(
-
-        kpis,
-
-        use_container_width=True,
-
-        hide_index=True
-
-    )
+    st.subheader("Estado RRHH")
 
 
 
     c1,c2,c3=st.columns(3)
 
 
+    c1.success(
 
-    with c1:
-        st.metric(
-            "Producción",
-            "604,500 kg"
-        )
+        "🟢 Dotación adecuada"
 
-
-    with c2:
-        st.metric(
-            "Ventas",
-            "S/9.07 M"
-        )
-
-
-    with c3:
-        st.metric(
-            "Utilidad",
-            "S/2.36 M"
-        )
+    )
 
 
 
-    st.success("""
+    c2.success(
 
-    ✅ Todas las metas estratégicas fueron cumplidas.
+        "🟢 Producción cubierta"
 
-    ✅ Mortalidad por debajo del máximo permitido.
+    )
 
-    ✅ Empresa rentable y sostenible.
+
+
+    c3.success(
+
+        "🟢 Operaciones estables"
+
+    )
+
+
+
+
+####################################################
+# ORGANIGRAMA SIMPLE
+####################################################
+
+
+    st.subheader("Organigrama")
+
+
+
+    st.info("""
+
+Gerencia General
+
+⬇
+
+Administración
+
+⬇
+
+Producción
+
+⬇
+
+Operarios
+
+
+Contador Externo
+
+
+Logística
+
+
+Ventas
+
+
+Calidad
+
 
     """)
 
 
 
+####################################################
+# TABLA
+####################################################
 
 
-# =====================================================
-# PLANEAMIENTO ESTRATÉGICO
-# =====================================================
+    st.dataframe(
+
+        personal,
+
+        use_container_width=True,
+
+        hide_index=True
+
+    )
+####################################################
+# KPIs ESTRATÉGICOS
+####################################################
+
+elif menu=="KPIs":
+
+    st.header("🎯 KPIs Estratégicos")
+
+    kpis=pd.DataFrame({
+
+        "Indicador":[
+            "Producción",
+            "Ventas",
+            "Utilidad",
+            "Clientes",
+            "Mortalidad",
+            "FCR"
+        ],
+
+        "Meta":[
+            600000,
+            9000000,
+            2300000,
+            45,
+            2.5,
+            1.4
+        ],
+
+        "Resultado":[
+            604500,
+            9067500,
+            2357500,
+            46,
+            1.98,
+            1.40
+        ]
+
+    })
 
 
-elif menu=="Planeamiento Estratégico":
+
+    st.dataframe(
+        kpis,
+        use_container_width=True
+    )
+
+
+
+    st.success("🟢 Producción superada")
+    st.success("🟢 Rentabilidad positiva")
+    st.success("🟢 Clientes por encima de meta")
+    st.success("🟢 Mortalidad controlada")
+
+
+
+####################################################
+# PLANEAMIENTO
+####################################################
+
+
+elif menu=="Planeamiento":
+
 
 
     st.header("🏢 Planeamiento Estratégico")
 
 
-    tab1,tab2,tab3,tab4 = st.tabs(
 
-        [
+    pestañas=st.tabs([
 
         "Misión",
-
         "Visión",
-
+        "Valores",
+        "Stakeholders",
+        "PESTEL",
         "FODA",
-
         "Objetivos"
 
-        ]
-
-    )
+    ])
 
 
-    with tab1:
-
-        st.info("""
-
-Highland Fish es una empresa especializada en la producción,
-crianza y aprovechamiento integral de recursos hidrobiológicos,
-orientada a proveer productos de alta calidad bajo principios
-de sostenibilidad ambiental.
-
-        """)
 
 
-    with tab2:
+########################
+# MISION
+########################
 
+
+    with pestañas[0]:
 
         st.info("""
 
-Al 2030 ser la empresa acuícola líder del altiplano peruano,
-reconocida por exportar truchas con valor agregado y
-certificación internacional.
+Highland Fish es una empresa especializada
+en la producción y aprovechamiento integral
+de recursos hidrobiológicos, orientada a
+proveer productos de alta calidad bajo
+principios de sostenibilidad ambiental.
 
         """)
 
 
 
-    with tab3:
-
-
-        st.markdown("""
-
-### Fortalezas
-
-- Ubicación privilegiada
-- Experiencia en producción
-- Costos flexibles
-
-
-### Debilidades
-
-- Registro manual
-- Sin certificación sostenible
+########################
+# VISION
+########################
 
 
 
-### Oportunidades
-
-- Mercado boliviano
-- Certificación internacional
+    with pestañas[1]:
 
 
+        st.info("""
 
-### Amenazas
-
-- Cambio climático
-- Enfermedades
-- Competidores
+Al 2030 ser la empresa acuícola líder
+del altiplano peruano, reconocida por
+exportar truchas con valor agregado
+y certificación internacional.
 
         """)
 
 
 
-    with tab4:
+
+########################
+# VALORES
+########################
+
+
+
+    with pestañas[2]:
+
+
+        valores=pd.DataFrame({
+
+            "Valor":[
+
+                "Innovación",
+                "Calidad",
+                "Responsabilidad Ambiental",
+                "Accesibilidad"
+
+            ]
+
+        })
+
+
+        st.dataframe(
+            valores,
+            use_container_width=True
+        )
+
+
+
+
+
+########################
+# STAKEHOLDERS
+########################
+
+
+
+    with pestañas[3]:
+
+
+        st.write("### Internos")
+
+        st.write("- Dueños")
+        st.write("- Operarios")
+        st.write("- Administración")
+
+
+
+        st.write("### Externos")
+
+        st.write("- Clientes")
+        st.write("- Comunidad")
+        st.write("- Gobierno")
+        st.write("- SANIPES")
+        st.write("- Proveedores")
+
+
+
+
+
+########################
+# PESTEL
+########################
+
+
+
+    with pestañas[4]:
+
+
+        pestel=pd.DataFrame({
+
+            "Factor":[
+
+                "Político",
+                "Económico",
+                "Social",
+                "Tecnológico",
+                "Ecológico",
+                "Legal"
+
+            ],
+
+
+
+            "Impacto":[
+
+                "Positivo",
+                "Negativo",
+                "Positivo",
+                "Positivo",
+                "Amenaza",
+                "Obligación"
+
+            ]
+
+        })
+
+
+
+        st.dataframe(
+
+            pestel,
+
+            use_container_width=True
+
+        )
+
+
+
+
+########################
+# FODA
+########################
+
+
+
+    with pestañas[5]:
+
+
+        c1,c2=st.columns(2)
+
+
+
+        with c1:
+
+
+            st.success("""
+
+FORTALEZAS
+
+• Lago Titicaca
+
+• Experiencia
+
+• Costos flexibles
+
+
+            """)
+
+
+
+            st.info("""
+
+OPORTUNIDADES
+
+• Bolivia
+
+• Certificación
+
+• Tecnología
+
+
+            """)
+
+
+
+        with c2:
+
+
+
+            st.warning("""
+
+DEBILIDADES
+
+• Excel manual
+
+• Pocas certificaciones
+
+
+            """)
+
+
+
+            st.error("""
+
+AMENAZAS
+
+• Cambio climático
+
+• Enfermedades
+
+• Competidores
+
+
+            """)
+
+
+
+
+
+########################
+# OBJETIVOS
+########################
+
+
+
+    with pestañas[6]:
 
 
         objetivos=pd.DataFrame({
@@ -1284,17 +2358,18 @@ certificación internacional.
 
             "Meta":[
 
-                "≤28%",
+                "≤2.5%",
 
                 "≤S/6.80",
 
                 "1.22",
 
-                "2 clientes"
+                "+2 clientes"
 
             ]
 
         })
+
 
 
         st.dataframe(
@@ -1309,29 +2384,30 @@ certificación internacional.
 
 
 
-
-# =====================================================
+####################################################
 # PROYECCIÓN
-# =====================================================
+####################################################
+
 
 
 elif menu=="Proyección":
 
 
 
-    st.header("📈 Proyección 2027")
+    st.header("📈 Proyección 2030")
+
 
 
     proyeccion=pd.DataFrame({
 
-
         "Año":[
 
             2025,
-
             2026,
-
-            2027
+            2027,
+            2028,
+            2029,
+            2030
 
         ],
 
@@ -1340,10 +2416,11 @@ elif menu=="Proyección":
         "Producción":[
 
             604500,
-
             650000,
-
-            700000
+            700000,
+            760000,
+            820000,
+            900000
 
         ]
 
@@ -1359,9 +2436,7 @@ elif menu=="Proyección":
 
         y="Producción",
 
-        markers=True,
-
-        title="Proyección de Producción"
+        markers=True
 
     )
 
@@ -1369,7 +2444,11 @@ elif menu=="Proyección":
 
     fig.update_layout(
 
-        height=500
+        template="plotly_white",
+
+        height=500,
+
+        title="Proyección Productiva al 2030"
 
     )
 
@@ -1385,41 +2464,30 @@ elif menu=="Proyección":
 
 
 
-    st.info("""
+    st.success("""
 
-Se proyecta un crecimiento debido a:
+Meta 2030:
 
+✔ 900,000 kg
 
-• Reducción de mortalidad
+✔ Certificación internacional
 
+✔ Liderazgo acuícola
 
-• Mayor cartera de clientes
-
-
-• Certificaciones sostenibles
-
-
-• Tecnología acuícola
-
-
-• Mejor alimentación
+✔ Expansión comercial
 
 
     """)
 
 
 
-
-# =====================================================
+####################################################
 # FOOTER
-# =====================================================
+####################################################
 
 
 st.markdown("---")
 
-
 st.caption(
-
-"🐟 Highland Fish S.A.C. | Dashboard Estratégico Integral 2026 | Universidad Nacional Agraria La Molina"
-
+"🐟 Highland Fish S.A.C. | Dashboard Estratégico Integral | Universidad Nacional Agraria La Molina | 2026"
 )
