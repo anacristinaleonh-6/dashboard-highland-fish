@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# --------------------------------------------------
+# ==========================================
 # CONFIGURACIÓN
-# --------------------------------------------------
+# ==========================================
 
 st.set_page_config(
     page_title="Highland Fish Dashboard",
@@ -12,27 +12,23 @@ st.set_page_config(
     layout="wide"
 )
 
-# --------------------------------------------------
-# ESTILO PROFESIONAL
-# --------------------------------------------------
+# ==========================================
+# ESTILO
+# ==========================================
 
 st.markdown("""
 <style>
 
-.main {
+.main{
     background-color:#f4f7fc;
-}
-
-h1,h2,h3{
-    color:#0A2342;
 }
 
 [data-testid="stMetric"]{
     background-color:white;
-    border-left:8px solid #0A2342;
     padding:15px;
     border-radius:12px;
-    box-shadow:0px 2px 8px rgba(0,0,0,0.1);
+    box-shadow:0px 3px 8px rgba(0,0,0,0.1);
+    border-left:8px solid #0A2342;
 }
 
 section[data-testid="stSidebar"]{
@@ -46,19 +42,21 @@ section[data-testid="stSidebar"] *{
 </style>
 """, unsafe_allow_html=True)
 
-# --------------------------------------------------
+# ==========================================
 # SIDEBAR
-# --------------------------------------------------
+# ==========================================
 
 st.sidebar.image(
-    "https://cdn-icons-png.flaticon.com/512/3075/3075977.png",
-    width=120
+    "https://cdn-icons-png.flaticon.com/512/1998/1998610.png",
+    width=140
 )
 
 st.sidebar.title("Highland Fish")
 
+st.sidebar.markdown("---")
+
 st.sidebar.markdown("""
-### Navegación
+### 📊 Navegación
 
 🏠 Resumen Ejecutivo
 
@@ -71,9 +69,40 @@ st.sidebar.markdown("""
 👨‍💼 Personal
 """)
 
-# --------------------------------------------------
-# DATOS
-# --------------------------------------------------
+st.sidebar.markdown("---")
+
+st.sidebar.success("Estado de la empresa: Excelente")
+
+# ==========================================
+# ENCABEZADO
+# ==========================================
+
+st.markdown("""
+<div style="
+background: linear-gradient(90deg,#0A2342,#1E4E8C);
+padding:25px;
+border-radius:15px;
+margin-bottom:20px;
+">
+
+<h1 style="color:white;">
+🐟 Highland Fish
+</h1>
+
+<h3 style="color:white;">
+Panel Ejecutivo de Gestión
+</h3>
+
+<p style="color:white;">
+Producción • Finanzas • Clientes • Personal
+</p>
+
+</div>
+""", unsafe_allow_html=True)
+
+# ==========================================
+# KPIS
+# ==========================================
 
 ventas = 287529
 gastos = 155307.55
@@ -82,18 +111,7 @@ clientes = 9
 trabajadores = 7
 margen = ganancia / ventas * 100
 
-# --------------------------------------------------
-# TÍTULO
-# --------------------------------------------------
-
-st.title("🐟 Highland Fish")
-st.subheader("Panel Ejecutivo de Gestión")
-
-st.divider()
-
-# --------------------------------------------------
-# KPIs
-# --------------------------------------------------
+st.header("📈 Indicadores Clave")
 
 c1,c2,c3,c4,c5 = st.columns(5)
 
@@ -103,25 +121,52 @@ c3.metric("Ganancia", f"S/ {ganancia:,.0f}")
 c4.metric("Clientes", clientes)
 c5.metric("Margen", f"{margen:.1f}%")
 
+st.info(
+    "📌 La empresa mantiene una reducción constante de mortalidad y un margen de ganancia de 46%."
+)
+
 st.divider()
 
-# --------------------------------------------------
-# PRODUCCIÓN
-# --------------------------------------------------
+# ==========================================
+# PRODUCCIÓN Y MORTALIDAD
+# ==========================================
 
 produccion = pd.DataFrame({
-    "Mes":["Enero","Febrero","Marzo","Abril","Mayo","Junio",
-           "Julio","Agosto","Setiembre","Octubre","Noviembre"],
-    "Producción":[836.93,1824.78,3520.23,5561.56,
-                  8142.31,9624.40,7743.87,
-                  10556.66,13956.47,17195.07,19940.27]
+    "Mes":["Enero","Febrero","Marzo","Abril","Mayo",
+           "Junio","Julio","Agosto","Setiembre",
+           "Octubre","Noviembre"],
+    "Producción":[
+        836.93,
+        1824.78,
+        3520.23,
+        5561.56,
+        8142.31,
+        9624.40,
+        7743.87,
+        10556.66,
+        13956.47,
+        17195.07,
+        19940.27
+    ]
 })
 
 mortalidad = pd.DataFrame({
-    "Mes":["Enero","Febrero","Marzo","Abril","Mayo","Junio",
-           "Julio","Agosto","Setiembre","Octubre","Noviembre"],
-    "Mortalidad":[16.5,13.6,10.5,9.5,8.0,
-                  6.1,3.2,3.2,2.8,2.6,2.1]
+    "Mes":["Enero","Febrero","Marzo","Abril","Mayo",
+           "Junio","Julio","Agosto","Setiembre",
+           "Octubre","Noviembre"],
+    "Mortalidad":[
+        16.5,
+        13.6,
+        10.5,
+        9.5,
+        8.0,
+        6.1,
+        3.2,
+        3.2,
+        2.8,
+        2.6,
+        2.1
+    ]
 })
 
 col1,col2 = st.columns(2)
@@ -136,11 +181,6 @@ with col1:
         title="Producción Mensual"
     )
 
-    fig1.update_layout(
-        title_x=0.2,
-        template="plotly_white"
-    )
-
     st.plotly_chart(fig1, use_container_width=True)
 
 with col2:
@@ -153,18 +193,13 @@ with col2:
         title="Mortalidad (%)"
     )
 
-    fig2.update_layout(
-        title_x=0.2,
-        template="plotly_white"
-    )
-
     st.plotly_chart(fig2, use_container_width=True)
 
-# --------------------------------------------------
+# ==========================================
 # FINANZAS
-# --------------------------------------------------
+# ==========================================
 
-st.header("💰 Análisis Financiero")
+st.header("💰 Finanzas")
 
 gastos_df = pd.DataFrame({
     "Concepto":[
@@ -181,7 +216,7 @@ gastos_df = pd.DataFrame({
     ]
 })
 
-ventas_df = pd.DataFrame({
+ventas_producto = pd.DataFrame({
     "Producto":[
         "Tres por Kg",
         "Retacos",
@@ -211,7 +246,7 @@ with col3:
 with col4:
 
     fig4 = px.bar(
-        ventas_df,
+        ventas_producto,
         x="Producto",
         y="Ventas",
         title="Ventas por Producto"
@@ -219,11 +254,11 @@ with col4:
 
     st.plotly_chart(fig4, use_container_width=True)
 
-# --------------------------------------------------
-# CLIENTES
-# --------------------------------------------------
+# ==========================================
+# CLIENTES Y PERSONAL
+# ==========================================
 
-st.header("👥 Clientes")
+st.header("👥 Clientes y Personal")
 
 clientes_df = pd.DataFrame({
     "Cliente":[
@@ -239,22 +274,6 @@ clientes_df = pd.DataFrame({
     ],
     "Participación":[20,9,3,7,10,23,12,9,7]
 })
-
-fig5 = px.bar(
-    clientes_df,
-    x="Cliente",
-    y="Participación",
-    color="Participación",
-    title="Participación de Clientes (%)"
-)
-
-st.plotly_chart(fig5, use_container_width=True)
-
-# --------------------------------------------------
-# PERSONAL
-# --------------------------------------------------
-
-st.header("👨‍💼 Personal")
 
 personal = pd.DataFrame({
     "Cargo":[
@@ -273,30 +292,47 @@ personal = pd.DataFrame({
     ]
 })
 
-fig6 = px.bar(
-    personal,
-    x="Cargo",
-    y="Costo",
-    color="Costo",
-    title="Costo por Cargo"
-)
+col5,col6 = st.columns(2)
 
-st.plotly_chart(fig6, use_container_width=True)
+with col5:
 
-# --------------------------------------------------
-# TABLA RESUMEN
-# --------------------------------------------------
+    fig5 = px.bar(
+        clientes_df,
+        x="Cliente",
+        y="Participación",
+        color="Participación",
+        title="Participación de Clientes (%)"
+    )
+
+    st.plotly_chart(fig5, use_container_width=True)
+
+with col6:
+
+    fig6 = px.bar(
+        personal,
+        x="Cargo",
+        y="Costo",
+        color="Costo",
+        title="Costo por Cargo"
+    )
+
+    st.plotly_chart(fig6, use_container_width=True)
+
+# ==========================================
+# TABLA EJECUTIVA
+# ==========================================
 
 st.header("📋 Resumen Ejecutivo")
 
 resumen = pd.DataFrame({
     "Indicador":[
-        "Ventas",
-        "Gastos",
+        "Ventas Totales",
+        "Gastos Totales",
         "Ganancia",
         "Clientes",
         "Trabajadores",
-        "Margen"
+        "Margen",
+        "Mortalidad Final"
     ],
     "Valor":[
         "S/ 287,529",
@@ -304,7 +340,8 @@ resumen = pd.DataFrame({
         "S/ 132,221",
         "9",
         "7",
-        "46%"
+        "46%",
+        "2.1%"
     ]
 })
 
@@ -313,4 +350,4 @@ st.dataframe(
     use_container_width=True
 )
 
-st.success("Dashboard Highland Fish actualizado correctamente")
+st.success("🐟 Dashboard Highland Fish actualizado correctamente")
